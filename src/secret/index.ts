@@ -3,6 +3,8 @@ dotenv.config();
 
 export const IGusername: string = process.env.IGusername || "default_IGusername";
 export const IGpassword: string = process.env.IGpassword || "default_IGpassword";
+export const FBusername: string = process.env.FBusername || "default_FBusername";
+export const FBpassword: string = process.env.FBpassword || "default_FBpassword";
 export const Xusername: string = process.env.Xusername || "default_Xusername";
 export const Xpassword: string = process.env.Xpassword || "default_Xpassword";
 

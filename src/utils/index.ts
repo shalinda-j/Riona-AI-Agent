@@ -41,7 +41,37 @@ export async function Instagram_cookiesExist(): Promise<boolean> {
     }
 }
 
+export async function Facebook_cookiesExist(): Promise<boolean> {
+    try {
+        const cookiesPath = "./cookies/Facebookcookies.json"; // Different path for Facebook
+        await fs.access(cookiesPath);
 
+        const cookiesData = await fs.readFile(cookiesPath, "utf-8");
+        const cookies = JSON.parse(cookiesData);
+
+        // Facebook-specific cookie validation
+        const sessionCookie = cookies.find((cookie: { name: string }) => 
+            cookie.name === 'c_user' || cookie.name === 'xs'
+        );
+
+        const currentTimestamp = Math.floor(Date.now() / 1000);
+
+        if (sessionCookie && sessionCookie.expires > currentTimestamp) {
+            return true;
+        }
+
+        return false;
+    } catch (error) {
+        const err = error as NodeJS.ErrnoException;
+        if (err.code === 'ENOENT') {
+            logger.warn("Facebook cookies file does not exist.");
+            return false;
+        } else {
+            logger.error("Error checking Facebook cookies:", error);
+            return false;
+        }
+    }
+}
 
 export async function saveCookies(cookiesPath: string, cookies: any[]): Promise<void> {
     try {

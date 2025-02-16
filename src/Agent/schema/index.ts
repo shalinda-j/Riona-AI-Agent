@@ -60,6 +60,64 @@ export const getInstagramCommentSchema = (): InstagramCommentSchema => {
     };
 };
 
+export interface FacebookCommentSchema {
+    description: string;
+    type: SchemaType;
+    items: {
+        type: SchemaType;
+        properties: {
+            comment: {
+                type: SchemaType;
+                description: string;
+                nullable: boolean;
+            };
+            viralRate: {
+                type: SchemaType;
+                description: string;
+                nullable: boolean;
+            };
+            commentTokenCount: {
+                type: SchemaType;
+                description: string;
+                nullable: boolean;
+            };
+        };
+        required: string[];
+    };
+}
+
+export const getFacebookCommentSchema = (): FacebookCommentSchema => {
+    return {
+        description: `Lists Facebook comments that are engaging and appropriate for longer-form discussions.`,
+        type: SchemaType.ARRAY,
+        items: {
+            type: SchemaType.OBJECT,
+            properties: {
+                comment: {
+                    type: SchemaType.STRING,
+                    description: "A Facebook comment between 200 and 500 characters.",
+                    nullable: false,
+                },
+                viralRate: {
+                    type: SchemaType.NUMBER,
+                    description: "The potential virality score specific to Facebook's algorithm (0-100).",
+                    nullable: false,
+                },
+                commentTokenCount: {
+                    type: SchemaType.NUMBER,
+                    description: "The total number of tokens in the Facebook comment.",
+                    nullable: false,
+                },
+            },
+            required: [
+                "comment",
+                "viralRate",
+                "commentTokenCount"
+            ],
+        },
+    };
+};
+
 
 
 // Define the interface for the Tweet document
